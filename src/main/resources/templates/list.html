@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="category.css">
+</head>
+<body>
+<div class="listbox">
+<p th:text="${description}">
+
+</p>
+
+    <h1>Wszystkie napoje</h1>
+<div class="centerText">
+        <table class="table size">
+            <thead>
+            <tr class="color">
+                <th>Nazwa</th>
+                <th></th>
+                <th>Autor</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="" th:each="recipe : ${allCategory}">
+               <td><a th:href="@{'/przepis'(id=${recipe.id})}"><h3 style="color: white" th:text="${recipe.title}"></h3></a></td>
+<td></td>
+                <td th:text="${recipe.user.nickname}"></td>
+            </tr>
+            </tbody>
+        </table>
+</div>
+</div>
+</body>
+</html>
