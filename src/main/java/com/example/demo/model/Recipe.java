@@ -16,6 +16,7 @@ public class Recipe {
     private Long id;
     private String title;
     private String description;
+    private String img;
     @Enumerated(EnumType.STRING)
     private Category category;
 

@@ -20,11 +20,16 @@ public class User {
     private Long id;
     private String firstName;
     private String lastName;
-    private String nickname;
     @OneToOne(cascade = CascadeType.PERSIST)
-    private LoginData loginData;
+    private UserData userData;
 
     @OneToMany(mappedBy = "user")
     private List<Recipe> recipeList;
 
+
+    public User(String firstName, String lastName, UserData userData) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.userData = userData;
+    }
 }

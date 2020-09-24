@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Login Form Design</title>
     <link rel="stylesheet" type="text/css" href="style.css">
@@ -9,23 +9,19 @@
     <img  src="https://cdn.pixabay.com/photo/2016/10/08/18/35/restaurant-1724294_960_720.png" class="avatar">
     </a>
     <h1>Wprowadź dane żeby się zarejestrować</h1>
-    <form>
+    <form method="post" class="positionList" th:object="${add}">
         <p>Imie</p>
-        <input type="text" name="" placeholder="Wpisz imie">
+        <input type="text" name="firstName" th:fild="*{firstName}" placeholder="Wpisz imie">
         <p>Nazwisko</p>
-        <input type="password" name="" placeholder="Wpisz nazwisko">
-        <p>Nick</p>
-        <input type="text" name="" placeholder="Wpisz nick">
+        <input type="text" name="lastName" th:fild="*{lastName}" placeholder="Wpisz nazwisko">
         <p>Login</p>
-        <input type="text" name="" placeholder="Wpisz login">
+        <input type="text" name="username" th:fild="*{username}" placeholder="Wpisz login">
         <p>Hasło</p>
-        <input type="password" name="" placeholder="Wpisz hasło">
-        <input type="submit" name="" value="Zarejestruj">
-        <a href="/logowanie">Posiadasz już konto?</a>
+        <input type="password" name="password" th:fild="*{password}" placeholder="Wpisz hasło">
+        <input type="submit"  value="Zarejestruj">
+        <a href="/login">Posiadasz już konto?</a>
     </form>
-
 </div>
-
 </body>
 </head>
 </html>

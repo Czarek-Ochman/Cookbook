@@ -15,7 +15,7 @@ public class Ingredient {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
    private String name;
-   private int amount;
+   private String amount;
    @ManyToOne
    private Recipe recipe;
 

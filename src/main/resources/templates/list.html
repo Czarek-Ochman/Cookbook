@@ -4,31 +4,61 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" type="text/css" href="category.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 </head>
 <body>
+
+<div class="background">
+    <nav class="navbar navbar-expand-lg navbar-light backgroundH">
+        <a class="navbar-brand" href="/"><span style="color: white">Z myślą o smaku</span></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="/panel-uzytkownika"><span style="color: white">Panel użytkownika</span></a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="/kategorie"><span style="color: white">Kategorie</span></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+<div>
 <div class="listbox">
-<p th:text="${description}">
-
-</p>
-
-    <h1>Wszystkie napoje</h1>
+    <h1 class="centerText" th:text="${title}"></h1></br>
+    <p th:text="${description}">
+    </p>
 <div class="centerText">
-        <table class="table size">
+        <table class="table sizeTable" >
             <thead>
             <tr class="color">
-                <th>Nazwa</th>
-                <th></th>
-                <th>Autor</th>
+                <th><h4 style="color: white" class="centerText">Zdjęcie</h4></th>
+                <th><h4 style="color: white" class="centerText">Nazwa</h4></th>
+                <th><h4 style="color: white" class="centerText">Opis</h4></th>
+                <th><h4 style="color: white" class="centerText">Autor</h4></th>
             </tr>
             </thead>
             <tbody>
-            <tr class="" th:each="recipe : ${allCategory}">
-               <td><a th:href="@{'/przepis'(id=${recipe.id})}"><h3 style="color: white" th:text="${recipe.title}"></h3></a></td>
-<td></td>
-                <td th:text="${recipe.user.nickname}"></td>
+            <tr  th:each="recipe : ${allCategory}">
+                <td class="size"><img class="size centerText" th:src="${recipe.img}"></td>
+               <td><a th:href="@{'/przepis'(id=${recipe.id})}"><h3 style="color: white" class="a centerText" th:text="${recipe.title}"></h3></a></td>
+                <td>><h3 style="color: white" class="a centerText" th:text="${recipe.description}"></h3></td>
+                <td><span style="color: white" class="centerText" th:text="${recipe.user.userData.username}"></span></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
             </tr>
             </tbody>
         </table>
+</div>
 </div>
 </div>
 </body>

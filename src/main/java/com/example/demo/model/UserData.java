@@ -12,14 +12,20 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class LoginData {
+public class UserData {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String login;
-    private String email;
+    private String username;
     private String password;
+    private boolean enabled;
 
-    @OneToOne(mappedBy = "loginData")
+    @OneToOne(mappedBy = "userData")
     private User user;
+
+    public UserData(String username, String password, boolean enabled) {
+        this.username = username;
+        this.password = password;
+        this.enabled = enabled;
+    }
 }
