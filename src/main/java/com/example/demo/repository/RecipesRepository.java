@@ -27,5 +27,10 @@ public interface RecipesRepository extends JpaRepository<Recipe, Long> {
     void update(@Param("title") String title, @Param("description") String description, @Param("img") String img,
                          @Param("id")Long id);
 
+    @Query("SELECT r FROM Recipe r " +
+            "WHERE r.title LIKE CONCAT('%',:title, '%')")
+    List<Recipe> getAuctionsWithTitleAndColor(String title);
+
+    public List<Recipe> findTop4ByOrderByRatingDesc();
 
 }

@@ -33,13 +33,12 @@ RecipesRepository recipesRepository;
 
 
 
-
-
-
     @GetMapping("/")
-    public String getHome() {
-        return "home";
+    public String getHome(Model model, Principal principal) {
+        return cookbookServices.getContentHome(model, principal);
     }
+
+
 
     @GetMapping("/login")
     public String login() {

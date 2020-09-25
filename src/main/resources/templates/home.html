@@ -1,16 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Z myślą o smaku</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
           integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="styleHome.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
 <div class="background">
     <nav class="navbar navbar-expand-lg navbar-light backgroundH">
-        <a class="navbar-brand" href="#"><span style="color: white">Z myślą o smaku</span></a>
+        <a class="navbar-brand" href="/home"><span style="color: white">Z myślą o smaku</span></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -27,18 +28,60 @@
                     <a class="nav-link" href="/rejestracja"><span style="color: white">Rejestracja</span></a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link" href="/panel-uzytkownika"><span style="color: white">Panel użytkownika</span></a>
+                    <a class="nav-link" href="/panel-uzytkownika"><span
+                            style="color: white">Panel użytkownika</span></a>
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Szukaj" aria-label="Search">
-                <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Szukaj</button>
+                <h2 style="color: white"> 🙋‍♂🙋️<h2 style="color: white" th:text="${name}"></h2></h2>
             </form>
         </div>
     </nav>
 </div>
 
-<h1><span style="color: white"> babababba</span></h1>
+<div class="categoryBox">
+    <div class="centerText">
+        <h2 style="color: white">Żeby odnieść blogowy sukces (stworzyć swoją społeczność fanów, mieć ciągłe dostawy świeżych czytelników z
+            wyszukiwarek internetowych – Google, Bing – i ostatecznie zacząć na blogu zarabiać), to warto już na starcie
+            oprzeć swoją witrynę www na solidnych fundamentach. Zrób sobie kawę (herbatę/wodę/piwo/drinka), rozsiądź się
+            wygodnie i dowiedz się jak założyć bloga kulinarnego we właściwy sposób – krok po kroku.</h2></br>
+
+        <table class="margin">
+            <tr>
+                <td><a th:href="@{'/przepis'(id=${recipe1.id})}"><img th:src="${recipe1.img}" height="250" width="350"></a>
+                </td>
+                <td><a th:href="@{'/przepis'(id=${recipe2.id})}"><img th:src="${recipe2.img}" height="250" width="350"></a>
+                </td>
+                <td><a th:href="@{'/przepis'(id=${recipe3.id})}"><img th:src="${recipe3.img}" height="250" width="350"></a>
+                </td>
+                <td><a th:href="@{'/przepis'(id=${recipe4.id})}"><img th:src="${recipe4.img}" height="250" width="350"></a>
+                </td>
+            </tr>
+            <tr>
+                <td><a th:href="@{'/przepis'(id=${recipe1.id})}"><h3 style="color: white" class="a centerText" th:text="${recipe1.title}"></h3></a></td>
+                </th>
+                <td><a th:href="@{'/przepis'(id=${recipe2.id})}"><h3 style="color: white" class="a centerText" th:text="${recipe2.title}"></h3></a></td>
+                </th>
+                <td><a th:href="@{'/przepis'(id=${recipe3.id})}"><h3 style="color: white" class="a centerText" th:text="${recipe3.title}"></h3></a></td>
+                </th>
+                <td><a th:href="@{'/przepis'(id=${recipe4.id})}"><h3 style="color: white" class="a centerText" th:text="${recipe4.title}"></h3></a></td>
+                </th>
+
+            </tr>
+            <tr>
+                <td><h2 style="color: white"> 👍<span th:text="${recipe1.rating}"></span> osób lubi to!👍</h2></td>
+                </th>
+                <td><h2 style="color: white"> 👍<span th:text="${recipe2.rating}"></span> osób lubi to!👍</h2></td>
+                </th>
+                <td><h2 style="color: white"> 👍<span th:text="${recipe3.rating}"></span> osób lubi to!👍</h2></td>
+                </th>
+                <td><h2 style="color: white"> 👍<span th:text="${recipe4.rating}"></span> osób lubi to!👍</h2></td>
+                </th>
+
+            </tr>
+        </table>
+    </div>
+</div>
 
 </body>
 </html>

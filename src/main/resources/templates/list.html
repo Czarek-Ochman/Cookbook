@@ -40,7 +40,7 @@
             <tr class="color">
                 <th><h4 style="color: white" class="centerText">Zdjęcie</h4></th>
                 <th><h4 style="color: white" class="centerText">Nazwa</h4></th>
-                <th><h4 style="color: white" class="centerText">Opis</h4></th>
+                <th><h4 style="color: white" class="centerText">Ocena</h4></th>
                 <th><h4 style="color: white" class="centerText">Autor</h4></th>
             </tr>
             </thead>
@@ -48,7 +48,7 @@
             <tr  th:each="recipe : ${allCategory}">
                 <td class="size"><img class="size centerText" th:src="${recipe.img}"></td>
                <td><a th:href="@{'/przepis'(id=${recipe.id})}"><h3 style="color: white" class="a centerText" th:text="${recipe.title}"></h3></a></td>
-                <td>><h3 style="color: white" class="a centerText" th:text="${recipe.description}"></h3></td>
+                <td>><h3 style="color: white" class="a centerText" th:text="${recipe.rating}"></h3></td>
                 <td><span style="color: white" class="centerText" th:text="${recipe.user.userData.username}"></span></td>
             </tr>
             <tr>

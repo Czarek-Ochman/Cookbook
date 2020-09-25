@@ -48,6 +48,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().ignoringAntMatchers("/h2-console/**")
                 .and()
+                .csrf().ignoringAntMatchers("//**")
+                .and()
                 .headers().frameOptions().disable()
                 .and()
                 .formLogin()

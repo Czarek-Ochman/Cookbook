@@ -100,13 +100,6 @@ public class CookbookServices {
 
 
     public String editedRecipe(@RequestParam Long id, Recipe newRecipe) {
-//        Recipe recipe = recipesRepository.findById(id).orElse(null);
-//        recipe.setTitle(newRecipe.getTitle());
-//        recipe.setDescription(newRecipe.getDescription());
-//        recipe.setImg(newRecipe.getImg());
-//        recipe.setCategory(newRecipe.getCategory());
-//        recipe.setUser(newRecipe.getUser());
-//        recipesRepository.save(recipe);
         recipesRepository.update(newRecipe.getTitle(),newRecipe.getDescription(),newRecipe.getImg(), id);
         return "redirect:/";
     }
@@ -114,4 +107,36 @@ public class CookbookServices {
     public void deleteIngredientById(Long id) {
         ingredientRepository.deleteById(id);
     }
+
+
+    public List<Recipe> getFourRecipeByRating(){
+return recipesRepository.findTop4ByOrderByRatingDesc();
+    }
+
+    public String getContentHome(Model model, Principal principal) {
+        List<Recipe> fourRecipeByRating = getFourRecipeByRating();
+        Recipe recipe = fourRecipeByRating.get(0);
+        Recipe recipe2 = fourRecipeByRating.get(1);
+        Recipe recipe3 = fourRecipeByRating.get(2);
+        Recipe recipe4 = fourRecipeByRating.get(3);
+        String name = getUser(principal);
+        model.addAttribute("recipe1", recipe);
+        model.addAttribute("recipe2", recipe2);
+        model.addAttribute("recipe3", recipe3);
+        model.addAttribute("recipe4", recipe4);
+        model.addAttribute("name", name);
+        return "home";
+    }
+
+    private String getUser(Principal principal) {
+        String name;
+        try{
+            name = principal.getName();
+        }catch (NullPointerException e){
+            name = "Użytkownik niezalogowany";
+        }
+        return name;
+    }
 }
+
+

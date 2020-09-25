@@ -17,6 +17,7 @@ public class Recipe {
     private String title;
     private String description;
     private String img;
+    private int rating;
     @Enumerated(EnumType.STRING)
     private Category category;
 
