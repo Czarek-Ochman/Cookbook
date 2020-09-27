@@ -9,6 +9,10 @@ body {
     background-repeat: no-repeat;
 }
 
+.backgroundTable {
+    background: rgba(0, 0, 0, 0.5);
+    width: 400px;
+}
 
 .background {
     background: rgba(0, 0, 0, 0.5);
@@ -20,9 +24,29 @@ body {
 
 /*Kategorie*/
 .categoryBox {
-    margin-top: 220px;
+    margin-top: 100px;
     background: rgba(0, 0, 0, 0.5);
     height: 560px;
+    width: 100%;
+}
+
+.categoryBoxHome {
+    margin-top: 120px;
+    background: rgba(0, 0, 0, 0.5);
+    height: 550px;
+    width: 100%;
+}
+
+.categoryBoxX {
+    margin-top: 50px;
+    background: rgba(0, 0, 0, 0.5);
+    height: 590px;
+    width: 100%;
+}
+
+.categoryBoxTitle {
+    background: rgba(0, 0, 0, 0.5);
+    height: 60px;
     width: 100%;
 }
 

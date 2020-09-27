@@ -17,7 +17,7 @@ public class Recipe {
     private String title;
     private String description;
     private String img;
-    private int rating;
+    private int rating = 0;
     @Enumerated(EnumType.STRING)
     private Category category;
 
@@ -26,6 +26,16 @@ public class Recipe {
 
     @ManyToOne
    private User user;
+
+
+    public Recipe(String title, String description, String img, Category category, List<Ingredient> ingredients, User user) {
+        this.title = title;
+        this.description = description;
+        this.img = img;
+        this.category = category;
+        this.ingredients = ingredients;
+        this.user = user;
+    }
 
     public Category getCategory() {
         return category;

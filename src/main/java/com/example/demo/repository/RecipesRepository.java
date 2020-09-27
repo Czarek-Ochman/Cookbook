@@ -23,14 +23,29 @@ public interface RecipesRepository extends JpaRepository<Recipe, Long> {
 
     @Transactional
     @Modifying(clearAutomatically = true)
-    @Query("update Recipe r set r.title =:title, r.description = :description,r.img = :img   where r.id =:id")
+    @Query("update Recipe r set r.title =:title, r.description = :description,r.img = :img  where r.id =:id")
     void update(@Param("title") String title, @Param("description") String description, @Param("img") String img,
-                         @Param("id")Long id);
+                @Param("id") Long id);
 
-    @Query("SELECT r FROM Recipe r " +
-            "WHERE r.title LIKE CONCAT('%',:title, '%')")
-    List<Recipe> getAuctionsWithTitleAndColor(String title);
+
+    @Transactional
+    @Modifying(clearAutomatically = true)
+    @Query("update Recipe r set r.rating =:rating  where r.id =:id")
+    void update(@Param("rating") int rating, @Param("id") Long id);
+
+
+//    @Transactional
+//    @Modifying(clearAutomatically = true)
+//    @Query("SAVE Recipe r set r.title =:title, r.description = :description,r.img = :img  where r.id =:id")
+//    void saveRecipe(@Param("title") String title, @Param("description") String description, @Param("img") String img,
+//                @Param("id") Long id);
+
+//    @Query("SELECT r FROM Recipe r " +
+//            "WHERE r.title LIKE CONCAT('%',:title, '%')")
+//    List<Recipe> get(String title);
 
     public List<Recipe> findTop4ByOrderByRatingDesc();
 
+    @Query("SELECT r FROM Recipe r ORDER BY r.rating DESC")
+    List<Recipe> findAndSortRecipe();
 }

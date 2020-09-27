@@ -48,7 +48,7 @@
             <tr  th:each="recipe : ${allCategory}">
                 <td class="size"><img class="size centerText" th:src="${recipe.img}"></td>
                <td><a th:href="@{'/przepis'(id=${recipe.id})}"><h3 style="color: white" class="a centerText" th:text="${recipe.title}"></h3></a></td>
-                <td>><h3 style="color: white" class="a centerText" th:text="${recipe.rating}"></h3></td>
+                <td><h3 style="color: white" class="a centerText" th:text="${recipe.rating}"></h3></td>
                 <td><span style="color: white" class="centerText" th:text="${recipe.user.userData.username}"></span></td>
             </tr>
             <tr>

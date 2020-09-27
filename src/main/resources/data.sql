@@ -147,40 +147,6 @@ insert into ingredient (amount, name,recipe_id) values ('250ml', 'śmietana 18%'
 
 -- kolacja
 
-insert into recipe (category, description, title, user_id,img, rating) values (
-'SUPPER', 'Wyrazisty smak, lekka nuta cytryny', 'Zupa pomidorowa', 10,'https://cdn.pixabay.com/photo/2015/02/03/16/31/soup-622737__340.jpg',1);
-insert into ingredient (amount, name,recipe_id) values ('2l', 'bulion z kury', 15);
-insert into ingredient (amount, name,recipe_id) values ('200g', 'koncentrat pomidorowy', 15);
-insert into ingredient (amount, name,recipe_id) values ('1 łyżeczka', 'pieprz', 15);
-insert into ingredient (amount, name,recipe_id) values ('250ml', 'śmietana 18%', 15);
-
-insert into recipe (category, description, title, user_id,img, rating) values (
-'SUPPER', 'Wyrazisty smak, lekka nuta cytryny', 'Zupa pomidorowa', 10,'https://cdn.pixabay.com/photo/2015/02/03/16/31/soup-622737__340.jpg',1);
-insert into ingredient (amount, name,recipe_id) values ('2l', 'bulion z kury', 15);
-insert into ingredient (amount, name,recipe_id) values ('200g', 'koncentrat pomidorowy', 15);
-insert into ingredient (amount, name,recipe_id) values ('1 łyżeczka', 'pieprz', 15);
-insert into ingredient (amount, name,recipe_id) values ('250ml', 'śmietana 18%', 15);
-
-insert into recipe (category, description, title, user_id,img, rating) values (
-'SUPPER', 'Wyrazisty smak, lekka nuta cytryny', 'Zupa pomidorowa', 10,'https://cdn.pixabay.com/photo/2015/02/03/16/31/soup-622737__340.jpg',1);
-insert into ingredient (amount, name,recipe_id) values ('2l', 'bulion z kury', 15);
-insert into ingredient (amount, name,recipe_id) values ('200g', 'koncentrat pomidorowy', 15);
-insert into ingredient (amount, name,recipe_id) values ('1 łyżeczka', 'pieprz', 15);
-insert into ingredient (amount, name,recipe_id) values ('250ml', 'śmietana 18%', 15);
-
-insert into recipe (category, description, title, user_id,img, rating) values (
-'SUPPER', 'Wyrazisty smak, lekka nuta cytryny', 'Zupa pomidorowa', 10,'https://cdn.pixabay.com/photo/2015/02/03/16/31/soup-622737__340.jpg',1);
-insert into ingredient (amount, name,recipe_id) values ('2l', 'bulion z kury', 15);
-insert into ingredient (amount, name,recipe_id) values ('200g', 'koncentrat pomidorowy', 15);
-insert into ingredient (amount, name,recipe_id) values ('1 łyżeczka', 'pieprz', 15);
-insert into ingredient (amount, name,recipe_id) values ('250ml', 'śmietana 18%', 15);
-
-insert into recipe (category, description, title, user_id,img, rating) values (
-'SUPPER', 'Wyrazisty smak, lekka nuta cytryny', 'Zupa pomidorowa', 10,'https://cdn.pixabay.com/photo/2015/02/03/16/31/soup-622737__340.jpg',1);
-insert into ingredient (amount, name,recipe_id) values ('2l', 'bulion z kury', 15);
-insert into ingredient (amount, name,recipe_id) values ('200g', 'koncentrat pomidorowy', 15);
-insert into ingredient (amount, name,recipe_id) values ('1 łyżeczka', 'pieprz', 15);
-insert into ingredient (amount, name,recipe_id) values ('250ml', 'śmietana 18%', 15);
 
 -- desser
 

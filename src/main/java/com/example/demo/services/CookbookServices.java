@@ -1,8 +1,6 @@
 package com.example.demo.services;
 
-import com.example.demo.model.Category;
-import com.example.demo.model.Ingredient;
-import com.example.demo.model.Recipe;
+import com.example.demo.model.*;
 import com.example.demo.repository.IngredientRepository;
 import com.example.demo.repository.UserDataRepository;
 import com.example.demo.repository.RecipesRepository;
@@ -14,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.transaction.Transactional;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -26,6 +25,7 @@ public class CookbookServices {
     UserDataRepository userDataRepository;
     UsersRepository usersRepository;
     IngredientRepository ingredientRepository;
+    List<Rating> ratings= new ArrayList<>();
 
     public CookbookServices(RecipesRepository recipesRepository, UserDataRepository userDataRepository, UsersRepository usersRepository, IngredientRepository ingredientRepository) {
         this.recipesRepository = recipesRepository;
@@ -35,9 +35,17 @@ public class CookbookServices {
     }
 
     public String getRecipeList(Category category, Model model) {
-        List<Recipe> byCategory = recipesRepository.findAll().stream()
-                .filter(r -> r.getCategory().equals(category))
-                .collect(Collectors.toList());
+        List<Recipe> byCategory;
+
+        if (category.toString().equals("ALL")) {
+            byCategory = recipesRepository.findAll();
+        } else if (category.toString().equals("RATING")) {
+            byCategory = recipesRepository.findAndSortRecipe();
+        } else {
+            byCategory = recipesRepository.findAll().stream()
+                    .filter(r -> r.getCategory().equals(category))
+                    .collect(Collectors.toList());
+        }
         String description = "Coś poszło nie tak!";
         String title = "Coś poszło nie tak!";
         if (category.toString().equals("DRINK")) {
@@ -58,6 +66,12 @@ public class CookbookServices {
         } else if (category.toString().equals("BREAKFAST")) {
             title = "Śniadania:";
             description = "Śniadanie to najważniejszy posiłek dnia, dlatego w tym miejscu znajdziesz najróżniejsze przepisy na przepyszne śniadanie.";
+        } else if (category.toString().equals("ALL")) {
+            title = "Wszystkie przepisy:";
+            description = "Szukasz pomysłu na danie, ale nie wiesz co chcesz zjeść? To idealne miejsca dla ciebie! W tej zakładce znajdują się inspiracje na smakowite przepisy wszystkich rodzai dań.";
+        } else if (category.toString().equals("RATING")) {
+            title = "Najlepiej oceniane:";
+            description = "Szukasz pomysłu na danie, ale nie wiesz co chcesz zjeść? To idealne miejsca dla ciebie! W tej zakładce znajdują się nasze najlepsze przepisy";
         }
 
         model.addAttribute("title", title);
@@ -66,12 +80,29 @@ public class CookbookServices {
         return "list";
     }
 
-    public String getRecipeInformation(@RequestParam Long id, Model model) {
+    public String getRecipeInformation(Long id, boolean rate, Model model) {
         Optional<Recipe> recipeOptional = recipesRepository.findById(id);
+        Recipe recipe = recipesRepository.findById(id).orElse(null);
+        List<Ingredient> allByRecipe = ingredientRepository.findAllByRecipe(recipe);
+
+        if (rate) {
+            int rating = recipe.getRating() + 1;
+            ratings.add(new Rating(recipe.getId(), true));
+            recipesRepository.update(rating, id);
+        }
+
+        for (int i = 0; i < ratings.size(); i++) {
+            if(ratings.get(i).getId() == recipe.getId()){
+                rate = true;
+                break;
+            }
+        }
+
+        model.addAttribute("rate", rate);
+        model.addAttribute("ingredient", allByRecipe);
         model.addAttribute("recipe", recipeOptional);
         return "recipe";
     }
-
 
     public String getUserRecipes(Model model, Principal principal) {
         String name = principal.getName();
@@ -100,7 +131,7 @@ public class CookbookServices {
 
 
     public String editedRecipe(@RequestParam Long id, Recipe newRecipe) {
-        recipesRepository.update(newRecipe.getTitle(),newRecipe.getDescription(),newRecipe.getImg(), id);
+        recipesRepository.update(newRecipe.getTitle(), newRecipe.getDescription(), newRecipe.getImg(), id);
         return "redirect:/";
     }
 
@@ -109,8 +140,8 @@ public class CookbookServices {
     }
 
 
-    public List<Recipe> getFourRecipeByRating(){
-return recipesRepository.findTop4ByOrderByRatingDesc();
+    public List<Recipe> getFourRecipeByRating() {
+        return recipesRepository.findTop4ByOrderByRatingDesc();
     }
 
     public String getContentHome(Model model, Principal principal) {
@@ -130,13 +161,30 @@ return recipesRepository.findTop4ByOrderByRatingDesc();
 
     private String getUser(Principal principal) {
         String name;
-        try{
+        try {
             name = principal.getName();
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             name = "Użytkownik niezalogowany";
         }
         return name;
     }
+
+    public void save(String title, String description, String img, Category category, Principal principal) {
+        List<Ingredient> ingredients = new ArrayList<>();
+        try {
+            UserData byUsername = userDataRepository.findByUsername(principal.getName());
+            Optional<User> byId = usersRepository.findById(byUsername.getId());
+            Recipe recipe = new Recipe(title, description, img, category, ingredients, byId.orElse(null));
+            recipesRepository.save(recipe);
+        } catch (NullPointerException e) {
+            System.out.println("Błąd dodawania przepisu");
+        }
+    }
+
+    public void addIngredient(Ingredient ingredient) {
+
+    }
+
 }
 
 

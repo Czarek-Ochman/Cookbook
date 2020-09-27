@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Category;
+import com.example.demo.model.Ingredient;
 import com.example.demo.model.Recipe;
 import com.example.demo.model.UserBuilder;
 import com.example.demo.repository.RecipesRepository;
@@ -21,8 +22,8 @@ public class homeController {
 
 
     CookbookServices cookbookServices;
-UserService userService;
-RecipesRepository recipesRepository;
+    UserService userService;
+    RecipesRepository recipesRepository;
 
     @Autowired
     public homeController(CookbookServices cookbookServices, UserService userService, RecipesRepository recipesRepository) {
@@ -32,12 +33,10 @@ RecipesRepository recipesRepository;
     }
 
 
-
     @GetMapping("/")
     public String getHome(Model model, Principal principal) {
         return cookbookServices.getContentHome(model, principal);
     }
-
 
 
     @GetMapping("/login")
@@ -54,7 +53,7 @@ RecipesRepository recipesRepository;
 
     @PostMapping("/rejestracja")
     public String adding(UserBuilder userBuilder) {
-        userService.saveUser(userBuilder.getFirstName(),userBuilder.getLastName(),userBuilder.getUsername(),userBuilder.getPassword());
+        userService.saveUser(userBuilder.getFirstName(), userBuilder.getLastName(), userBuilder.getUsername(), userBuilder.getPassword());
         return "home";
     }
 
@@ -63,19 +62,33 @@ RecipesRepository recipesRepository;
         return "category";
     }
 
+    @GetMapping("/ocen")
+    public String rate(@RequestParam Long id) {
+
+        return "category";
+    }
+
     @GetMapping("/przepisy")
     public String getList(@RequestParam Category category, Model model, Principal principal) {
-        return cookbookServices.getRecipeList(category,model);
+//        int rating
+        return cookbookServices.getRecipeList(category, model);
     }
+
+//    @GetMapping("/przepisy")
+//    public String addRating(@RequestParam Category category, Model model, Principal principal) {
+//        return cookbookServices.getRecipeList(category,model);
+//    }
 
     @GetMapping("/przepis")
-    public String getRecipe(@RequestParam Long id, Model model) {
-        return cookbookServices.getRecipeInformation(id, model);
+    public String getRecipe(@RequestParam Long id,@RequestParam(required = false) boolean rate, Model model) {
+        return cookbookServices.getRecipeInformation(id,rate,model);
     }
 
+
+
     @GetMapping("/panel-uzytkownika")
-    public String getUserPanel(Model model,Principal principal){
-      return  cookbookServices.getUserRecipes(model, principal);
+    public String getUserPanel(Model model, Principal principal) {
+        return cookbookServices.getUserRecipes(model, principal);
     }
 
     @GetMapping("/kasowanie")
@@ -101,5 +114,31 @@ RecipesRepository recipesRepository;
         return cookbookServices.editedRecipe(id, newRecipe);
     }
 
+
+    @GetMapping("/dodawanie")
+    public String add(Model model) {
+        Recipe recipe = new Recipe();
+        model.addAttribute("recipe", recipe);
+        model.addAttribute("mode", "adding");
+        return "add";
+    }
+
+    @PostMapping("/dodawanie")
+    public String adding(Recipe recipe, Principal principal) {
+        cookbookServices.save(recipe.getTitle(), recipe.getDescription(), recipe.getImg(), recipe.getCategory(), principal);
+        return "redirect:/dodawanie-skladniki";
+    }
+
+    @GetMapping("/dodawanie-skladniki")
+    public String addIngredient(Model model) {
+        Ingredient ingredient = new Ingredient();
+        model.addAttribute("add", ingredient);
+        return "addIngredient";
+    }
+//    @PostMapping("/rejestracja")
+//    public String addingIngredient(Ingredient ingredient) {
+//        cookbookServices.addIngredient(ingredient);
+//        return "home";
+//    }
 
 }

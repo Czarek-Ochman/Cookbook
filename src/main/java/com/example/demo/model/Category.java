@@ -9,5 +9,7 @@ public enum Category {
     DESSERT,
     SNACK,
     SUPPER,
-    DRINK;
+    DRINK,
+    ALL,
+    RATING;
 }

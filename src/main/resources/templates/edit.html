@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
           integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 </head>
-<body class="backgroundColor">
+<body style="background-color: #e9ecef">
 <div class="center">
     <div class="jumbotron">
         <h1 class="display-4 center">Edytuj przepis!</h1>
@@ -31,13 +31,6 @@
                        name="img"
                        th:placeholder="${oldRecipe.img}"><br>
             </div>
-            <div class="center form-group">
-                <h3 class="display-7 center">Kategoria</h3>
-                <input type="text" class="form-control"  th:value="${oldRecipe.category}" th:name="category" th:id="category"
-                       name="category"
-                       th:placeholder="${oldRecipe.category}"><br>
-            </div>
-
             <div class="center form-group">
                 <h3 class="display-7 center">Składniki</h3>
 
