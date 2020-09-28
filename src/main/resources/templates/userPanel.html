@@ -17,10 +17,12 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="btn btn btn-dark" href="/"><span style="color: white">Strona główna</span> <span class="sr-only">(current)</span></a>
+                    <a class="btn btn btn-dark" href="/"><span style="color: white">Strona główna</span> <span
+                            class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item active">
-                    <a class="btn btn btn-dark" href="/dodawanie"><span style="color: white">Dodaj przepis</span> <span class="sr-only">(current)</span></a>
+                    <a class="btn btn btn-dark" href="/dodawanie"><span style="color: white">Dodaj przepis</span> <span
+                            class="sr-only">(current)</span></a>
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
@@ -43,7 +45,7 @@
         <td th:text="${recipe.img}"></td>
         <td>
             <a th:href="|/kasowanie?id=${recipe.id}|" class="btn btn btn-dark">Usuń</a></td>
-            <td><a th:href="|/edytowanie?id=${recipe.id}|" class="btn btn btn-dark">Edytuj</a></td>
+        <td><a th:href="|/edytowanie?id=${recipe.id}|" class="btn btn btn-dark">Edytuj</a></td>
     </tr>
     </tbody>
 </table>

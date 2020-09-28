@@ -14,9 +14,14 @@ public class Ingredient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-   private String name;
-   private String amount;
-   @ManyToOne
-   private Recipe recipe;
+    private String name;
+    private String amount;
+    @ManyToOne
+    private Recipe recipe;
 
+    public Ingredient(String name, String amount, Recipe recipe) {
+        this.name = name;
+        this.amount = amount;
+        this.recipe = recipe;
+    }
 }

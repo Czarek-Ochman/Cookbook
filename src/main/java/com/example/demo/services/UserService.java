@@ -24,11 +24,11 @@ public class UserService {
     }
 
     public void saveUser(String firstName, String lastName, String username, String password) {
-        UserData userData = new UserData(username,passwordEncoder.encode(password),true);
+        UserData userData = new UserData(username, passwordEncoder.encode(password), true);
         User user = new User(firstName, lastName, userData);
         userDataRepository.save(userData);
         userRepository.save(user);
-        UserRole userRole = new UserRole(username,"ROLE_USER");
+        UserRole userRole = new UserRole(username, "ROLE_USER");
         userRoleRepository.save(userRole);
     }
 }

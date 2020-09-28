@@ -22,9 +22,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private DataSource dataSource;
 
-
     @Bean
-    public PasswordEncoder passwordEncoder() {return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    public PasswordEncoder passwordEncoder() {
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
     @Override
@@ -40,6 +40,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/edytacja").hasRole("USER")
                 .antMatchers("/dodawanie").hasRole("USER")
                 .antMatchers("/dodawanie-skladniki").hasRole("USER")
+                .antMatchers("/edytuj-skladnik").hasRole("USER")
                 .antMatchers("/h2-console/**")
                 .permitAll()
                 .anyRequest().authenticated()
@@ -54,6 +55,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().ignoringAntMatchers("/przepis/**")
                 .and()
+                .csrf().ignoringAntMatchers("/edytuj-skladnik/**")
+                .and()
                 .csrf().ignoringAntMatchers("/h2-console/**")
                 .and()
                 .csrf().ignoringAntMatchers("//**")
@@ -67,7 +70,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication().dataSource(dataSource)
-        .usersByUsernameQuery("select username,password,enabled from user_data where username=?")
+                .usersByUsernameQuery("select username,password,enabled from user_data where username=?")
                 .authoritiesByUsernameQuery("select username, role from user_role where username=?");
     }
 }

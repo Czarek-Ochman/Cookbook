@@ -25,7 +25,7 @@ public class CookbookServices {
     UserDataRepository userDataRepository;
     UsersRepository usersRepository;
     IngredientRepository ingredientRepository;
-    List<Rating> ratings= new ArrayList<>();
+    List<Rating> ratings = new ArrayList<>();
 
     public CookbookServices(RecipesRepository recipesRepository, UserDataRepository userDataRepository, UsersRepository usersRepository, IngredientRepository ingredientRepository) {
         this.recipesRepository = recipesRepository;
@@ -80,19 +80,19 @@ public class CookbookServices {
         return "list";
     }
 
-    public String getRecipeInformation(Long id, boolean rate, Model model) {
+    public String getRecipeInformation(Long id, boolean rate, Model model,Principal principal) {
         Optional<Recipe> recipeOptional = recipesRepository.findById(id);
         Recipe recipe = recipesRepository.findById(id).orElse(null);
         List<Ingredient> allByRecipe = ingredientRepository.findAllByRecipe(recipe);
 
         if (rate) {
             int rating = recipe.getRating() + 1;
-            ratings.add(new Rating(recipe.getId(), true));
+            ratings.add(new Rating(recipe.getId(), true,getUser(principal)));
             recipesRepository.update(rating, id);
         }
 
         for (int i = 0; i < ratings.size(); i++) {
-            if(ratings.get(i).getId() == recipe.getId()){
+            if (ratings.get(i).getId() == recipe.getId()&& ratings.get(i).getUsername().equals(getUser(principal))) {
                 rate = true;
                 break;
             }
@@ -129,16 +129,28 @@ public class CookbookServices {
         return "edit";
     }
 
-
     public String editedRecipe(@RequestParam Long id, Recipe newRecipe) {
         recipesRepository.update(newRecipe.getTitle(), newRecipe.getDescription(), newRecipe.getImg(), id);
         return "redirect:/";
     }
 
+    public String getIngredientForEditing(@RequestParam Long id, Model model) {
+        Ingredient ingredient = ingredientRepository.findById(id).orElse(null);
+        Ingredient newIngredient = new Ingredient();
+        model.addAttribute("ingredient", newIngredient);
+        model.addAttribute("oldIngredient", ingredient);
+        model.addAttribute("mode", "edited");
+        return "editIngredient";
+    }
+
+    public String editedIngredient(@RequestParam Long id, Ingredient newIngredient) {
+        ingredientRepository.update(newIngredient.getName(), newIngredient.getAmount(), id);
+        return "redirect:/panel-uzytkownika";
+    }
+
     public void deleteIngredientById(Long id) {
         ingredientRepository.deleteById(id);
     }
-
 
     public List<Recipe> getFourRecipeByRating() {
         return recipesRepository.findTop4ByOrderByRatingDesc();
@@ -181,10 +193,9 @@ public class CookbookServices {
         }
     }
 
-    public void addIngredient(Ingredient ingredient) {
-
+    public void addIngredient(IngredientBuilder ingredientBuilder) {
+        Recipe recipe = recipesRepository.findById(ingredientBuilder.getIdRecipe()).orElse(null);
+        Ingredient newIngredient = new Ingredient(ingredientBuilder.getName(), ingredientBuilder.getAmount(), recipe);
+        ingredientRepository.save(newIngredient);
     }
-
 }
-
-

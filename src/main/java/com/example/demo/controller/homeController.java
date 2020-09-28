@@ -1,9 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.Category;
-import com.example.demo.model.Ingredient;
-import com.example.demo.model.Recipe;
-import com.example.demo.model.UserBuilder;
+import com.example.demo.model.*;
 import com.example.demo.repository.RecipesRepository;
 import com.example.demo.services.CookbookServices;
 import com.example.demo.services.UserService;
@@ -20,7 +17,6 @@ import java.util.stream.Collectors;
 @Controller
 public class homeController {
 
-
     CookbookServices cookbookServices;
     UserService userService;
     RecipesRepository recipesRepository;
@@ -32,12 +28,10 @@ public class homeController {
         this.recipesRepository = recipesRepository;
     }
 
-
     @GetMapping("/")
     public String getHome(Model model, Principal principal) {
         return cookbookServices.getContentHome(model, principal);
     }
-
 
     @GetMapping("/login")
     public String login() {
@@ -70,21 +64,13 @@ public class homeController {
 
     @GetMapping("/przepisy")
     public String getList(@RequestParam Category category, Model model, Principal principal) {
-//        int rating
         return cookbookServices.getRecipeList(category, model);
     }
 
-//    @GetMapping("/przepisy")
-//    public String addRating(@RequestParam Category category, Model model, Principal principal) {
-//        return cookbookServices.getRecipeList(category,model);
-//    }
-
     @GetMapping("/przepis")
-    public String getRecipe(@RequestParam Long id,@RequestParam(required = false) boolean rate, Model model) {
-        return cookbookServices.getRecipeInformation(id,rate,model);
+    public String getRecipe(@RequestParam Long id, @RequestParam(required = false) boolean rate, Model model, Principal principal) {
+        return cookbookServices.getRecipeInformation(id, rate, model,principal);
     }
-
-
 
     @GetMapping("/panel-uzytkownika")
     public String getUserPanel(Model model, Principal principal) {
@@ -108,12 +94,20 @@ public class homeController {
         return cookbookServices.getRecipeForEditing(id, model);
     }
 
-
     @PostMapping("/edytowanie")
     public String edited(@RequestParam Long id, Recipe newRecipe) {
         return cookbookServices.editedRecipe(id, newRecipe);
     }
 
+    @GetMapping("/edytuj-skladnik")
+    public String editIngredient(@RequestParam Long id, Model model) {
+        return cookbookServices.getIngredientForEditing(id, model);
+    }
+
+    @PostMapping("/edytuj-skladnik")
+    public String editedIngredient(@RequestParam Long id, Ingredient newIngredient) {
+        return cookbookServices.editedIngredient(id, newIngredient);
+    }
 
     @GetMapping("/dodawanie")
     public String add(Model model) {
@@ -130,15 +124,18 @@ public class homeController {
     }
 
     @GetMapping("/dodawanie-skladniki")
-    public String addIngredient(Model model) {
-        Ingredient ingredient = new Ingredient();
-        model.addAttribute("add", ingredient);
+    public String addIngredient(Model model, Principal principal) {
+        IngredientBuilder ingredientBuilder = new IngredientBuilder();
+        String name = principal.getName();
+        List<Recipe> recipes = recipesRepository.findAllByUserUserDataUsername(name);
+        model.addAttribute("recipe", recipes);
+        model.addAttribute("add", ingredientBuilder);
         return "addIngredient";
     }
-//    @PostMapping("/rejestracja")
-//    public String addingIngredient(Ingredient ingredient) {
-//        cookbookServices.addIngredient(ingredient);
-//        return "home";
-//    }
 
+    @PostMapping("/dodawanie-skladniki")
+    public String addingIngredient(IngredientBuilder ingredientBuilder) {
+        cookbookServices.addIngredient(ingredientBuilder);
+        return "redirect:/dodawanie-skladniki";
+    }
 }

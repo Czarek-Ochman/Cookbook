@@ -14,7 +14,6 @@ import java.util.List;
 @Repository
 public interface RecipesRepository extends JpaRepository<Recipe, Long> {
 
-
     public List<Recipe> findByCategory(String category);
 
     @Query("SELECT r FROM Recipe r " +
@@ -27,22 +26,10 @@ public interface RecipesRepository extends JpaRepository<Recipe, Long> {
     void update(@Param("title") String title, @Param("description") String description, @Param("img") String img,
                 @Param("id") Long id);
 
-
     @Transactional
     @Modifying(clearAutomatically = true)
     @Query("update Recipe r set r.rating =:rating  where r.id =:id")
     void update(@Param("rating") int rating, @Param("id") Long id);
-
-
-//    @Transactional
-//    @Modifying(clearAutomatically = true)
-//    @Query("SAVE Recipe r set r.title =:title, r.description = :description,r.img = :img  where r.id =:id")
-//    void saveRecipe(@Param("title") String title, @Param("description") String description, @Param("img") String img,
-//                @Param("id") Long id);
-
-//    @Query("SELECT r FROM Recipe r " +
-//            "WHERE r.title LIKE CONCAT('%',:title, '%')")
-//    List<Recipe> get(String title);
 
     public List<Recipe> findTop4ByOrderByRatingDesc();
 

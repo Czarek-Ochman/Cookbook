@@ -18,9 +18,6 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="/"><span style="color: white">Strona główna</span> <span class="sr-only">(current)</span></a>
-                </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link" href="/kategorie"><span style="color: white">Kategorie</span></a>
                 </li>
@@ -38,14 +35,15 @@
         </div>
     </nav>
 </div>
-
 <div class="categoryBoxHome">
     <div class="centerText">
-        <h2 style="color: white">Żeby odnieść blogowy sukces (stworzyć swoją społeczność fanów, mieć ciągłe dostawy świeżych czytelników z
-            wyszukiwarek internetowych – Google, Bing – i ostatecznie zacząć na blogu zarabiać), to warto już na starcie
-            oprzeć swoją witrynę www na solidnych fundamentach. Zrób sobie kawę (herbatę/wodę/piwo/drinka), rozsiądź się
-            wygodnie i dowiedz się jak założyć bloga kulinarnego we właściwy sposób – krok po kroku.</h2></br>
-
+        <h2 style="color: white">Witaj Kuchciku!
+            Jeśli szukasz inspiracji na przepyszne danie to trafiłeś w odpowiednie miejsce.
+            Na tej stronie znajdziesz najsmaczniejsze dania na każdą okazję i porę dnia, które zostały przesłane przez naszych użytkowników.
+            Na naszej stronie możesz także podzielić się swoimi potrawami i zainspirować innych do odtworzenia twojej potrawy!
+            Zachęcamy również do przyciśnięcia przycisku „Lubię to!” przy daniach,
+            które odtworzysz i stwierdzisz, że są warte polubienia!
+            Tak więc do dzieła!!!</h2></br>
         <table class="margin">
             <tr>
                 <td><a th:href="@{'/przepis'(id=${recipe1.id})}"><img th:src="${recipe1.img}" height="250" width="350"></a>
@@ -58,15 +56,18 @@
                 </td>
             </tr>
             <tr>
-                <td><a th:href="@{'/przepis'(id=${recipe1.id})}"><h3 style="color: white" class="a centerText" th:text="${recipe1.title}"></h3></a></td>
+                <td><a th:href="@{'/przepis'(id=${recipe1.id})}"><h3 style="color: white" class="a centerText"
+                                                                     th:text="${recipe1.title}"></h3></a></td>
                 </th>
-                <td><a th:href="@{'/przepis'(id=${recipe2.id})}"><h3 style="color: white" class="a centerText" th:text="${recipe2.title}"></h3></a></td>
+                <td><a th:href="@{'/przepis'(id=${recipe2.id})}"><h3 style="color: white" class="a centerText"
+                                                                     th:text="${recipe2.title}"></h3></a></td>
                 </th>
-                <td><a th:href="@{'/przepis'(id=${recipe3.id})}"><h3 style="color: white" class="a centerText" th:text="${recipe3.title}"></h3></a></td>
+                <td><a th:href="@{'/przepis'(id=${recipe3.id})}"><h3 style="color: white" class="a centerText"
+                                                                     th:text="${recipe3.title}"></h3></a></td>
                 </th>
-                <td><a th:href="@{'/przepis'(id=${recipe4.id})}"><h3 style="color: white" class="a centerText" th:text="${recipe4.title}"></h3></a></td>
+                <td><a th:href="@{'/przepis'(id=${recipe4.id})}"><h3 style="color: white" class="a centerText"
+                                                                     th:text="${recipe4.title}"></h3></a></td>
                 </th>
-
             </tr>
             <tr>
                 <td><h2 style="color: white"> 👍<span th:text="${recipe1.rating}"></span> osób lubi to!👍</h2></td>
@@ -77,11 +78,9 @@
                 </th>
                 <td><h2 style="color: white"> 👍<span th:text="${recipe4.rating}"></span> osób lubi to!👍</h2></td>
                 </th>
-
             </tr>
         </table>
     </div>
 </div>
-
 </body>
 </html>

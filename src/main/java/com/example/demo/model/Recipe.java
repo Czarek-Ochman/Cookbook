@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -25,7 +26,7 @@ public class Recipe {
     private List<Ingredient> ingredients;
 
     @ManyToOne
-   private User user;
+    private User user;
 
 
     public Recipe(String title, String description, String img, Category category, List<Ingredient> ingredients, User user) {
