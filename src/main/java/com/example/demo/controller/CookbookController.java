@@ -15,14 +15,14 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
-public class homeController {
+public class CookbookController {
 
     CookbookServices cookbookServices;
     UserService userService;
     RecipesRepository recipesRepository;
 
     @Autowired
-    public homeController(CookbookServices cookbookServices, UserService userService, RecipesRepository recipesRepository) {
+    public CookbookController(CookbookServices cookbookServices, UserService userService, RecipesRepository recipesRepository) {
         this.cookbookServices = cookbookServices;
         this.userService = userService;
         this.recipesRepository = recipesRepository;
@@ -58,7 +58,6 @@ public class homeController {
 
     @GetMapping("/ocen")
     public String rate(@RequestParam Long id) {
-
         return "category";
     }
 
@@ -111,10 +110,7 @@ public class homeController {
 
     @GetMapping("/dodawanie")
     public String add(Model model) {
-        Recipe recipe = new Recipe();
-        model.addAttribute("recipe", recipe);
-        model.addAttribute("mode", "adding");
-        return "add";
+        return cookbookServices.getRecipeForAdding(model);
     }
 
     @PostMapping("/dodawanie")
@@ -125,12 +121,7 @@ public class homeController {
 
     @GetMapping("/dodawanie-skladniki")
     public String addIngredient(Model model, Principal principal) {
-        IngredientBuilder ingredientBuilder = new IngredientBuilder();
-        String name = principal.getName();
-        List<Recipe> recipes = recipesRepository.findAllByUserUserDataUsername(name);
-        model.addAttribute("recipe", recipes);
-        model.addAttribute("add", ingredientBuilder);
-        return "addIngredient";
+        return cookbookServices.getIngredientForAdding(model, principal);
     }
 
     @PostMapping("/dodawanie-skladniki")

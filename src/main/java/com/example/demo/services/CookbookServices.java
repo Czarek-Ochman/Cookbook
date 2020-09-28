@@ -196,4 +196,20 @@ public class CookbookServices {
         Ingredient newIngredient = new Ingredient(ingredientBuilder.getName(), ingredientBuilder.getAmount(), recipe);
         ingredientRepository.save(newIngredient);
     }
+
+    public String getRecipeForAdding(Model model) {
+        Recipe recipe = new Recipe();
+        model.addAttribute("recipe", recipe);
+        model.addAttribute("mode", "adding");
+        return "add";
+    }
+
+    public String getIngredientForAdding(Model model, Principal principal) {
+        IngredientBuilder ingredientBuilder = new IngredientBuilder();
+        String name = principal.getName();
+        List<Recipe> recipes = recipesRepository.findAllByUserUserDataUsername(name);
+        model.addAttribute("recipe", recipes);
+        model.addAttribute("add", ingredientBuilder);
+        return "addIngredient";
+    }
 }
