@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edytowanie</title>
+    <link rel="stylesheet" type="text/css" href="styleOptions.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+</head>
+<body style="background-color: #e9ecef">
+<div>
+    <div class="jumbotron">
+        <h1 class="display-4 centerText">Dodaj przepis!</h1>
+        <hr class="my-4">
+        <form method="post" class="positionList" th:object="${recipe}">
+            <div class="center form-group">
+                <h3 class="display-7 centerText">Nazwa</h3>
+                <input type="text" name="name" class="form-control" required th:name="title" th:fild="*{title}"
+                       th:id="title">
+            </div>
+
+            <div class="center form-group">
+                <h3 class="display-7 centerText">Opis</h3>
+                <input type="text" name="description" class="form-control" required th:name="description"
+                       th:fild="*{description}"
+                       th:id="description">
+            </div>
+            <div class="center form-group">
+                <h3 class="display-7 centerText">Zdjęcie</h3>
+                <input type="text" class="form-control" required th:name="img" th:id="img" th:fild="*{img}"
+                       name="img"><br>
+            </div>
+            <div class="form-group">
+                <h3 class="display-7 centerText">Kategoria</h3>
+                <div class="form-check centerCategory">
+                    <input class="form-check-input" type="radio" name="category" required th:fild="*{category}"
+                           th:name="category" th:id="category" th:value="BREAKFAST">
+                    <label class="form-check-label">
+                        Śniadanie
+                    </label>
+                </div>
+                <div class="form-check centerCategory">
+                    <input class="form-check-input" type="radio" name="category" required th:fild="*{category}"
+                           th:name="category" th:id="category" th:value="DINNER">
+                    <label class="form-check-label">
+                        Obiad
+                    </label>
+                </div>
+                <div class="form-check centerCategory">
+                    <input class="form-check-input" type="radio" name="category" required th:fild="*{category}"
+                           th:name="category" th:id="category" th:value="SUPPER">
+                    <label class="form-check-label">
+                        Kolacja
+                    </label>
+                </div>
+                <div class="form-check centerCategory">
+                    <input class="form-check-input" type="radio" name="category" required th:fild="*{category}"
+                           th:name="category" th:id="category" th:value="SNACK">
+                    <label class="form-check-label">
+                        Przekąska
+                    </label>
+                </div>
+                <div class="form-check centerCategory">
+                    <input class="form-check-input" type="radio" name="category" required th:fild="*{category}"
+                           th:name="category" th:id="category" th:value="DESSERT">
+                    <label class="form-check-label">
+                        Deser
+                    </label>
+                </div>
+                <div class="form-check centerCategory">
+                    <input class="form-check-input" type="radio" name="category" required th:fild="*{category}"
+                           th:name="category" th:id="category" th:value="DRINK">
+                    <label class="form-check-label">
+                        Napój
+                    </label>
+                </div>
+            </div>
+            <div class="center">
+                <button type="submit" class="btn btn-secondary btn-lg btn-block">Dodaj składniki</button>
+                <br>
+            </div>
+        </form>
+        <a methods="get" href="/" class="btn btn-secondary btn-lg btn-block">Powrót na stronę główną</a>
+    </div>
+</div>
+</body>
+</html>
+</body>
+</html>

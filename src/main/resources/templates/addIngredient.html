@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="styleAdd.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+</head>
+<body style="background-color: #e9ecef">
+<div class="addbox">
+    <h1 class="centerText">Wprowadź składniki</h1>
+    <form method="post" class="positionList" th:object="${add}">
+        <div class="centerText">
+            <select id="inputState" class="form-control" name="idRecipe" required th:fild="${idRecipe}"
+                    th:name="idRecipe" th:id="idRecipe">
+                <div th:each="recipe : ${recipe}">
+                    <option th:text="${recipe.title}" name="idRecipe" th:value="${recipe.id}"></option>
+                </div>
+            </select>
+            <input type="text" name="name" required th:fild="*{name}" placeholder="Wprowadź nazwę">
+            <input type="text" name="amount" required th:fild="*{amount}" placeholder="Wprowadź ilość">
+        </div>
+        </br>
+        <input type="submit" class="btn btn btn-dark" value="Zapisz i dodaj kolejny">
+        <a class="btn btn btn-dark" href="/panel-uzytkownika"><span style="color: white">Gotowe</span></a>
+    </form>
+</div>
+</body>
+</html>
