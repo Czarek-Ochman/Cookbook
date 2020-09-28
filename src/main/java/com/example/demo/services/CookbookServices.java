@@ -42,9 +42,7 @@ public class CookbookServices {
         } else if (category.toString().equals("RATING")) {
             byCategory = recipesRepository.findAndSortRecipe();
         } else {
-            byCategory = recipesRepository.findAll().stream()
-                    .filter(r -> r.getCategory().equals(category))
-                    .collect(Collectors.toList());
+            byCategory= recipesRepository.findAllByCategory(category);
         }
         String description = "Coś poszło nie tak!";
         String title = "Coś poszło nie tak!";

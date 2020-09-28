@@ -14,7 +14,9 @@ import java.util.List;
 @Repository
 public interface RecipesRepository extends JpaRepository<Recipe, Long> {
 
-    public List<Recipe> findByCategory(String category);
+    @Query("SELECT r FROM Recipe r " +
+            "WHERE r.category = :category")
+    public List<Recipe> findAllByCategory(Category category);
 
     @Query("SELECT r FROM Recipe r " +
             "WHERE r.user.userData.username = :username")
