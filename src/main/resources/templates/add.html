@@ -12,7 +12,7 @@
     <div class="jumbotron">
         <h1 class="display-4 centerText">Dodaj przepis!</h1>
         <hr class="my-4">
-        <form method="post" class="positionList" th:object="${recipe}">
+        <form method="post" action="/dodawanie" th:action="@{/dodawanie}" class="positionList" th:object="${recipe}">
             <div class="center form-group">
                 <h3 class="display-7 centerText">Nazwa</h3>
                 <input type="text" name="name" class="form-control" required th:name="title" th:fild="*{title}"

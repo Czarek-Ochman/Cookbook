@@ -14,19 +14,11 @@ import java.util.List;
 @Repository
 public interface RecipesRepository extends JpaRepository<Recipe, Long> {
 
-    @Query("SELECT r FROM Recipe r " +
-            "WHERE r.category = :category")
     public List<Recipe> findAllByCategory(Category category);
 
     @Query("SELECT r FROM Recipe r " +
             "WHERE r.user.userData.username = :username")
     public List<Recipe> findAllByUserUserDataUsername(String username);
-
-    @Transactional
-    @Modifying(clearAutomatically = true)
-    @Query("update Recipe r set r.title =:title, r.description = :description,r.img = :img  where r.id =:id")
-    void update(@Param("title") String title, @Param("description") String description, @Param("img") String img,
-                @Param("id") Long id);
 
     @Transactional
     @Modifying(clearAutomatically = true)

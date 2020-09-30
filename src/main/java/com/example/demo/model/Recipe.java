@@ -22,12 +22,14 @@ public class Recipe {
     @Enumerated(EnumType.STRING)
     private Category category;
 
-    @OneToMany(mappedBy = "recipe")
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.REMOVE)
     private List<Ingredient> ingredients;
 
     @ManyToOne
     private User user;
 
+    @OneToMany
+    private List<Rating> ratings;
 
     public Recipe(String title, String description, String img, Category category, List<Ingredient> ingredients, User user) {
         this.title = title;

@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 import lombok.*;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 
@@ -16,7 +17,8 @@ public class Ingredient {
     private Long id;
     private String name;
     private String amount;
-    @ManyToOne
+
+    @ManyToOne()
     private Recipe recipe;
 
     public Ingredient(String name, String amount, Recipe recipe) {

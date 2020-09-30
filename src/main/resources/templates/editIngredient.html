@@ -15,16 +15,19 @@
         <form method="post" class="positionList" th:object="${ingredient}">
             <div class="center form-group">
                 <h3 class="display-7 center">Nazwa</h3>
-                <input type="text" name="name" class="form-control" th:value="${oldIngredient.name}" th:name="name"
+                <input type="text" name="name" class="form-control" th:fild="${oldIngredient.name}" th:name="name"
                        th:id="name" th:placeholder="${oldIngredient.name}">
             </div>
             <div class="center form-group">
                 <h3 class="display-7 center">Ilość</h3>
-                <input type="text" name="amount" class="form-control" th:value="${oldIngredient.amount}"
+                <input type="text" name="amount" class="form-control" th:fild="${oldIngredient.amount}"
                        th:name="amount"
                        th:id="amount"
                        th:placeholder="${oldIngredient.amount}">
             </div>
+            <input type="hidden" name="recipe" class="form-control" th:fild="${oldIngredient.recipe.id}"
+                   th:name="recipe"
+                   th:id="recipe">
             <div class="center">
                 <button type="submit" class="btn btn-secondary btn-lg btn-block">Edytuj</button>
                 <br>

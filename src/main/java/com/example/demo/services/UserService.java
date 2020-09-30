@@ -6,6 +6,7 @@ import com.example.demo.model.UserRole;
 import com.example.demo.repository.UserDataRepository;
 import com.example.demo.repository.UserRoleRepository;
 import com.example.demo.repository.UsersRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,7 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
     private UserDataRepository userDataRepository;
 
+    @Autowired
     public UserService(UsersRepository userRepository, UserRoleRepository userRoleRepository, PasswordEncoder passwordEncoder, UserDataRepository userDataRepository) {
         this.userRepository = userRepository;
         this.userRoleRepository = userRoleRepository;

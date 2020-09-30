@@ -18,7 +18,6 @@
                 <input type="text" name="name" class="form-control" th:value="${oldRecipe.title}" th:name="title"
                        th:id="title" th:placeholder="${oldRecipe.title}">
             </div>
-
             <div class="center form-group">
                 <h3 class="display-7 center">Opis</h3>
                 <input type="text" name="description" class="form-control" th:value="${oldRecipe.description}"
@@ -32,6 +31,12 @@
                        name="img"
                        th:placeholder="${oldRecipe.img}"><br>
             </div>
+            <input type="hidden" class="form-control" th:value="${oldRecipe.category}" th:name="category"
+                   th:id="category"
+                   name="category"><br>
+            <input type="hidden" class="form-control" th:value="${oldRecipe.user.id}" th:name="user" th:id="user"
+                   name="user"><br>
+
             <div class="center form-group">
                 <h3 class="display-7 center">Składniki</h3>
                 <a methods="get" href="/dodawanie-skladniki" class="btn btn-secondary btn-lg btn-block">Dodaj

@@ -19,13 +19,11 @@ public class CookbookController {
 
     CookbookServices cookbookServices;
     UserService userService;
-    RecipesRepository recipesRepository;
 
     @Autowired
     public CookbookController(CookbookServices cookbookServices, UserService userService, RecipesRepository recipesRepository) {
         this.cookbookServices = cookbookServices;
         this.userService = userService;
-        this.recipesRepository = recipesRepository;
     }
 
     @GetMapping("/")
@@ -68,7 +66,7 @@ public class CookbookController {
 
     @GetMapping("/przepis")
     public String getRecipe(@RequestParam Long id, @RequestParam(required = false) boolean rate, Model model, Principal principal) {
-        return cookbookServices.getRecipeInformation(id, rate, model,principal);
+        return cookbookServices.getRecipeInformation(id, rate, model, principal);
     }
 
     @GetMapping("/panel-uzytkownika")
@@ -94,8 +92,8 @@ public class CookbookController {
     }
 
     @PostMapping("/edytowanie")
-    public String edited(@RequestParam Long id, Recipe newRecipe) {
-        return cookbookServices.editedRecipe(id, newRecipe);
+    public String edited(Recipe newRecipe) {
+        return cookbookServices.editedRecipe(newRecipe);
     }
 
     @GetMapping("/edytuj-skladnik")
@@ -104,8 +102,8 @@ public class CookbookController {
     }
 
     @PostMapping("/edytuj-skladnik")
-    public String editedIngredient(@RequestParam Long id, Ingredient newIngredient) {
-        return cookbookServices.editedIngredient(id, newIngredient);
+    public String editedIngredient(Ingredient newIngredient) {
+        return cookbookServices.editedIngredient(newIngredient);
     }
 
     @GetMapping("/dodawanie")

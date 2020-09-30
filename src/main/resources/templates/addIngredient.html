@@ -10,7 +10,8 @@
 <body style="background-color: #e9ecef">
 <div class="addbox">
     <h1 class="centerText">Wprowadź składniki</h1>
-    <form method="post" class="positionList" th:object="${add}">
+    <form method="post" action="/dodawanie-skladniki" th:action="@{/dodawanie-skladniki}" class="positionList"
+          th:object="${add}">
         <div class="centerText">
             <select id="inputState" class="form-control" name="idRecipe" required th:fild="${idRecipe}"
                     th:name="idRecipe" th:id="idRecipe">

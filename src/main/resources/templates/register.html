@@ -9,7 +9,7 @@
         <img src="https://cdn.pixabay.com/photo/2016/10/08/18/35/restaurant-1724294_960_720.png" class="avatar">
     </a>
     <h1>Wprowadź dane żeby się zarejestrować</h1>
-    <form method="post" class="positionList" th:object="${add}">
+    <form method="post" th:action="@{/rejestracja}" class="positionList" th:object="${add}">
         <p>Imie</p>
         <input type="text" name="firstName" th:fild="*{firstName}" placeholder="Wpisz imie">
         <p>Nazwisko</p>
