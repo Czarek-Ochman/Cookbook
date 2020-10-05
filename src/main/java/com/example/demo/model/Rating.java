@@ -3,25 +3,26 @@ package com.example.demo.model;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserRole {
-
+@Getter
+public class Rating {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private boolean isRated;
     private String username;
-    private String role;
 
-    public UserRole(String username, String role) {
+    @ManyToOne
+    private Recipe recipe;
+
+    public Rating(boolean isRated, String username, Recipe recipe) {
+        this.isRated = isRated;
         this.username = username;
-        this.role = role;
+        this.recipe = recipe;
     }
 }

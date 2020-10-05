@@ -2,21 +2,41 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Panel użytkownika</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
           integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-<!--    <link rel="stylesheet" type="text/css" href="styleHome.css">-->
 </head>
 </head>
-<body>
-
-<h3 th:text="${name}"></h3>
+<body style="background-color: #e9ecef">
+<div style="background-color: darkgray ">
+    <nav class="navbar navbar-expand-lg navbar-light backgroundH">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="btn btn btn-dark" href="/"><span style="color: white">Strona główna</span> <span
+                            class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="btn btn btn-dark" href="/dodawanie"><span style="color: white">Dodaj przepis</span> <span
+                            class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <h2 style="color: white"> 🙋‍♂🙋️<h2 style="color: white" th:text="${name}"></h2></h2>
+            </form>
+        </div>
+    </nav>
+</div>
 <table class="table">
     <thead>
     <tr class="color">
         <th>Nazwa</th>
         <th>Opis</th>
-        <th>Autor</th>
+        <th>Zdjęcie</th>
     </thead>
     <tbody>
     <tr class="color" th:each="recipe : ${recipe}">
@@ -24,8 +44,8 @@
         <td th:text="${recipe.description}"></td>
         <td th:text="${recipe.img}"></td>
         <td>
-            <a th:href="|/kasowanie?id=${recipe.id}|" class="btn btn-secondary">Usuń</a>
-            <a th:href="|/edytowanie?id=${recipe.id}|" class="btn btn-secondary">Edytuj</a></td>
+            <a th:href="|/kasowanie?id=${recipe.id}|" class="btn btn btn-dark">Usuń</a></td>
+        <td><a th:href="|/edytowanie?id=${recipe.id}|" class="btn btn btn-dark">Edytuj</a></td>
     </tr>
     </tbody>
 </table>

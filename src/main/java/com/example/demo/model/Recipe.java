@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -17,15 +18,27 @@ public class Recipe {
     private String title;
     private String description;
     private String img;
-    private int rating;
+    private int rating = 0;
     @Enumerated(EnumType.STRING)
     private Category category;
 
-    @OneToMany(mappedBy = "recipe")
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.REMOVE)
     private List<Ingredient> ingredients;
 
     @ManyToOne
-   private User user;
+    private User user;
+
+    @OneToMany
+    private List<Rating> ratings;
+
+    public Recipe(String title, String description, String img, Category category, List<Ingredient> ingredients, User user) {
+        this.title = title;
+        this.description = description;
+        this.img = img;
+        this.category = category;
+        this.ingredients = ingredients;
+        this.user = user;
+    }
 
     public Category getCategory() {
         return category;

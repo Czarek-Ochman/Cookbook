@@ -17,7 +17,7 @@ body {
     width: 400px;
 }
 
-.sizeTable{
+.sizeTable {
     width: 600px;
 }
 
@@ -28,17 +28,17 @@ body {
     padding: 70px 30px;
 }
 
-.centerText{
+.centerText {
     margin-top: auto;
     text-align: center;
     margin-bottom: auto;
 }
 
-.size{
+.size {
     width: 200px;
     height: 200px;
 }
 
-.a{
+.a {
     margin-top: 70px;
 }

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edytowanie składnika</title>
+    <link rel="stylesheet" type="text/css" href="styleOptions.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+</head>
+<body style="background-color: #e9ecef">
+<div class="center">
+    <div class="jumbotron">
+        <h1 class="display-4 centerText">Edytuj składnik</h1>
+        <hr class="my-4">
+        <form method="post" class="positionList" th:object="${ingredient}">
+            <div class="center form-group">
+                <h3 class="display-7 center">Nazwa</h3>
+                <input type="text" name="name" class="form-control" th:fild="${oldIngredient.name}" th:name="name"
+                       th:id="name" th:placeholder="${oldIngredient.name}">
+            </div>
+            <div class="center form-group">
+                <h3 class="display-7 center">Ilość</h3>
+                <input type="text" name="amount" class="form-control" th:fild="${oldIngredient.amount}"
+                       th:name="amount"
+                       th:id="amount"
+                       th:placeholder="${oldIngredient.amount}">
+            </div>
+            <input type="hidden" name="recipe" class="form-control" th:fild="${oldIngredient.recipe.id}"
+                   th:name="recipe"
+                   th:id="recipe">
+            <div class="center">
+                <button type="submit" class="btn btn-secondary btn-lg btn-block">Edytuj</button>
+                <br>
+            </div>
+        </form>
+        <a methods="get" href="/" class="btn btn-secondary btn-lg btn-block">Powrót na stronę główną</a>
+    </div>
+</div>
+</body>
+</html>

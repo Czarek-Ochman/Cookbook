@@ -9,15 +9,8 @@ body {
     background-repeat: no-repeat;
 }
 
-.background {
-    background: rgba(0, 0, 0, 0.5);
-}
-
-.textcolor {
-    color: white;
-}
-
-.size {
-    width: 200px;
-    height: 200px;
+.centerText {
+    text-align: center;
+    margin-top: auto;
+    margin-bottom: auto;
 }

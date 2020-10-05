@@ -1,11 +1,61 @@
 <!DOCTYPE html>
-<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Przepisy</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="styleR.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-<h3 th:text="${recipe.get().title}"></h3>
-<h3 th:text="${recipe.get().description}"></h3>
+<div class="background">
+    <nav class="navbar navbar-expand-lg navbar-light backgroundH">
+        <a class="navbar-brand" href="/"><span style="color: white">Z myślą o smaku</span></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </nav>
+</div>
+<div class="categoryBoxX">
+    <div class="centerText">
+        <h2 style="color: white" th:text="${recipe.get().description}"></h2></br>
+
+        <table class="margin">
+            <tr>
+                <td><img th:src="${recipe.get().img}" height="250" width="350"></td>
+            </tr>
+            <tr>
+                <td><h3 style="color: white" class="a centerText" th:text="${recipe.get().title}"></h3>
+            </tr>
+            <tr>
+                <td>
+                    <div th:switch="${rate}">
+                        <p th:case="${false}"><a type="submit" th:value="true"
+                                                 th:href="@{/przepis?id={id}&rate={rate}(id=${recipe.get().id}, rate=true)}"
+                                                 class="btn btn-light"><span> Lubie to! 👍</span></a></p>
+                        <p th:case="${true}"><a type="submit" class="btn btn-light"><span>Polubione!</span></a></p>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table class="table table-striped textcolor">
+            <thead>
+            <tr class="backgroundTable">
+                <th scope="col">Ilość</th>
+                <th scope="col">Nazwa</th>
+            </tr>
+            </thead>
+            <tbody class="backgroundTable">
+            <tr class="backgroundTable" th:each="ingredient : ${ingredient}">
+                <th class="backgroundTable" scope="row" th:text="${ingredient.amount}"></th>
+                <td class="backgroundTable" th:text="${ingredient.name}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>
 </body>
 </html>

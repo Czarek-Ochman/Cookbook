@@ -1,12 +1,7 @@
 package com.example.demo.services;
 
-import com.example.demo.model.Category;
-import com.example.demo.model.Ingredient;
-import com.example.demo.model.Recipe;
-import com.example.demo.repository.IngredientRepository;
-import com.example.demo.repository.UserDataRepository;
-import com.example.demo.repository.RecipesRepository;
-import com.example.demo.repository.UsersRepository;
+import com.example.demo.model.*;
+import com.example.demo.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -14,51 +9,42 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.transaction.Transactional;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class CookbookServices {
 
-    @Autowired
-    RecipesRepository recipesRepository;
-    UserDataRepository userDataRepository;
-    UsersRepository usersRepository;
-    IngredientRepository ingredientRepository;
+    private RecipesRepository recipesRepository;
+    private UserDataRepository userDataRepository;
+    private UsersRepository usersRepository;
+    private IngredientRepository ingredientRepository;
+    private RatingRepository ratingRepository;
 
-    public CookbookServices(RecipesRepository recipesRepository, UserDataRepository userDataRepository, UsersRepository usersRepository, IngredientRepository ingredientRepository) {
+    @Autowired
+    public CookbookServices(RecipesRepository recipesRepository, UserDataRepository userDataRepository, UsersRepository usersRepository, IngredientRepository ingredientRepository, RatingRepository ratingRepository) {
         this.recipesRepository = recipesRepository;
         this.userDataRepository = userDataRepository;
         this.usersRepository = usersRepository;
         this.ingredientRepository = ingredientRepository;
+        this.ratingRepository = ratingRepository;
     }
 
     public String getRecipeList(Category category, Model model) {
-        List<Recipe> byCategory = recipesRepository.findAll().stream()
-                .filter(r -> r.getCategory().equals(category))
-                .collect(Collectors.toList());
-        String description = "Coś poszło nie tak!";
-        String title = "Coś poszło nie tak!";
-        if (category.toString().equals("DRINK")) {
-            title = "Napoje:";
-            description = "Szukasz pysznych  przepisów na kawy, napoje bezalkoholowe lub alkoholowe? Będziesz zachwycony tą zakładką. Tutaj na pewno znajdziesz coś dla siebie!";
-        } else if (category.toString().equals("SUPPER")) {
-            title = "Kolacje:";
-            description = "Na koniec dnia także przyda się pyszny przepis na lekką oraz uroczystą kolacje. W tej zakładce na pewno znajdziesz coś dla siebie!";
-        } else if (category.toString().equals("SNACK")) {
-            title = "Przekąski:";
-            description = "Jesteś głodny, ale nie masz czasu gotować? Ta zakładka charakteryzuje się smacznymi przepisami na proste i szybkie przekąski.";
-        } else if (category.toString().equals("DESSERT")) {
-            title = "Desery:";
-            description = "Słodka przerwa w ciągu dnia przyda się każdemu. Te miejsce jest idealne, aby znaleźć pyszny przepis na małe co nieco";
-        } else if (category.toString().equals("DINNER")) {
-            title = "Obiady:";
-            description = "Szukasz pomysłu na obiad? To idealne miejsca dla ciebie! W tej zakładce znajdują się inspiracje na smakowite przepisy dań obiadowych.";
-        } else if (category.toString().equals("BREAKFAST")) {
-            title = "Śniadania:";
-            description = "Śniadanie to najważniejszy posiłek dnia, dlatego w tym miejscu znajdziesz najróżniejsze przepisy na przepyszne śniadanie.";
+        List<Recipe> byCategory;
+
+        if (category.toString().equals("ALL")) {
+            byCategory = recipesRepository.findAll();
+        } else if (category.toString().equals("RATING")) {
+            byCategory = recipesRepository.findAndSortRecipe();
+        } else {
+            byCategory = recipesRepository.findAllByCategory(category);
         }
+        String description = category.getDescription();
+        String title = category.getTitle();
 
         model.addAttribute("title", title);
         model.addAttribute("description", description);
@@ -66,12 +52,30 @@ public class CookbookServices {
         return "list";
     }
 
-    public String getRecipeInformation(@RequestParam Long id, Model model) {
-        Optional<Recipe> recipeOptional = recipesRepository.findById(id);
-        model.addAttribute("recipe", recipeOptional);
+    public String getRecipeInformation(Long id, boolean rate, Model model, Principal principal) {
+        try {
+            Optional<Recipe> recipeOptional = recipesRepository.findById(id);
+            Recipe recipe = recipesRepository.findById(id).get();
+            List<Ingredient> allByRecipe = ingredientRepository.findAllByRecipe(recipe);
+
+            if (rate) {
+                int rating = recipe.getRating() + 1;
+                ratingRepository.save(new Rating(true, getUser(principal), recipe));
+                recipesRepository.update(rating, id);
+            }
+
+            if (ratingRepository.findByUsernameAndRecipe(getUser(principal), recipe) != null) {
+                rate = true;
+            }
+
+            model.addAttribute("rate", rate);
+            model.addAttribute("ingredient", allByRecipe);
+            model.addAttribute("recipe", recipeOptional);
+        } catch (NoSuchElementException e) {
+            System.out.println("Błąd id ocenianego przepisu");
+        }
         return "recipe";
     }
-
 
     public String getUserRecipes(Model model, Principal principal) {
         String name = principal.getName();
@@ -81,36 +85,55 @@ public class CookbookServices {
         return "userPanel";
     }
 
-    @Transactional
     public void deleteById(Long id) {
-        ingredientRepository.deleteAllByRecipe(recipesRepository.findById(id));
         recipesRepository.deleteById(id);
+
     }
 
     public String getRecipeForEditing(@RequestParam Long id, Model model) {
-        Recipe recipe = recipesRepository.findById(id).orElse(null);
-        List<Ingredient> allByRecipe = ingredientRepository.findAllByRecipe(recipe);
-        Recipe newRecipe = new Recipe();
-        model.addAttribute("byRecipe", allByRecipe);
-        model.addAttribute("recipe", newRecipe);
-        model.addAttribute("oldRecipe", recipe);
-        model.addAttribute("mode", "edited");
+        try {
+            Recipe recipe = recipesRepository.findById(id).get();
+            List<Ingredient> allByRecipe = ingredientRepository.findAllByRecipe(recipe);
+            Recipe newRecipe = new Recipe();
+            model.addAttribute("byRecipe", allByRecipe);
+            model.addAttribute("recipe", newRecipe);
+            model.addAttribute("oldRecipe", recipe);
+            model.addAttribute("mode", "edited");
+        } catch (NoSuchElementException e) {
+            System.out.println("Błędne id edytowanego przepisu! -> Wczytywanie");
+        }
         return "edit";
     }
 
-
-    public String editedRecipe(@RequestParam Long id, Recipe newRecipe) {
-        recipesRepository.update(newRecipe.getTitle(),newRecipe.getDescription(),newRecipe.getImg(), id);
+    public String editedRecipe(Recipe newRecipe) {
+        recipesRepository.save(newRecipe);
         return "redirect:/";
+    }
+
+    public String getIngredientForEditing(@RequestParam Long id, Model model) {
+        try {
+            Ingredient ingredient = ingredientRepository.findById(id).get();
+            Ingredient newIngredient = new Ingredient();
+            model.addAttribute("ingredient", newIngredient);
+            model.addAttribute("oldIngredient", ingredient);
+            model.addAttribute("mode", "edited");
+        } catch (NoSuchElementException e) {
+            System.out.println("Błędne id edytowanego składnika! -> Wczytywanie");
+        }
+        return "editIngredient";
+    }
+
+    public String editedIngredient(Ingredient newIngredient) {
+        ingredientRepository.save(newIngredient);
+        return "redirect:/panel-uzytkownika";
     }
 
     public void deleteIngredientById(Long id) {
         ingredientRepository.deleteById(id);
     }
 
-
-    public List<Recipe> getFourRecipeByRating(){
-return recipesRepository.findTop4ByOrderByRatingDesc();
+    public List<Recipe> getFourRecipeByRating() {
+        return recipesRepository.findTop4ByOrderByRatingDesc();
     }
 
     public String getContentHome(Model model, Principal principal) {
@@ -130,13 +153,49 @@ return recipesRepository.findTop4ByOrderByRatingDesc();
 
     private String getUser(Principal principal) {
         String name;
-        try{
-            name = principal.getName();
-        }catch (NullPointerException e){
+        if (principal == null) {
             name = "Użytkownik niezalogowany";
+        } else {
+            name = principal.getName();
         }
         return name;
     }
+
+    public void save(String title, String description, String img, Category category, Principal principal) {
+        try {
+            List<Ingredient> ingredients = new ArrayList<>();
+            UserData byUsername = userDataRepository.findByUsername(principal.getName());
+            Optional<User> byId = usersRepository.findById(byUsername.getId());
+            Recipe recipe = new Recipe(title, description, img, category, ingredients, byId.get());
+            recipesRepository.save(recipe);
+        } catch (NoSuchElementException e) {
+            System.out.println("Błąd id przepisu podczas zapisywania!");
+        }
+    }
+
+    public void addIngredient(IngredientBuilder ingredientBuilder) {
+        try {
+            Recipe recipe = recipesRepository.findById(ingredientBuilder.getIdRecipe()).get();
+            Ingredient newIngredient = new Ingredient(ingredientBuilder.getName(), ingredientBuilder.getAmount(), recipe);
+            ingredientRepository.save(newIngredient);
+        } catch (NoSuchElementException e) {
+            System.out.println("Błąd id przepisu podczas dodawania!");
+        }
+    }
+
+    public String getRecipeForAdding(Model model) {
+        Recipe recipe = new Recipe();
+        model.addAttribute("recipe", recipe);
+        model.addAttribute("mode", "adding");
+        return "add";
+    }
+
+    public String getIngredientForAdding(Model model, Principal principal) {
+        IngredientBuilder ingredientBuilder = new IngredientBuilder();
+        String name = principal.getName();
+        List<Recipe> recipes = recipesRepository.findAllByUserUserDataUsername(name);
+        model.addAttribute("recipe", recipes);
+        model.addAttribute("add", ingredientBuilder);
+        return "addIngredient";
+    }
 }
-
-

@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Edytowanie</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" type="text/css" href="styleOptions.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
           integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 </head>
-<body class="backgroundColor">
-<div class="center">
+<body style="background-color: #e9ecef">
+<div class="centerText">
     <div class="jumbotron">
-        <h1 class="display-4 center">Edytuj przepis!</h1>
+        <h1 class="display-4">Edytuj przepis!</h1>
         <hr class="my-4">
         <form method="post" class="positionList" th:object="${recipe}">
             <div class="center form-group">
@@ -18,56 +18,53 @@
                 <input type="text" name="name" class="form-control" th:value="${oldRecipe.title}" th:name="title"
                        th:id="title" th:placeholder="${oldRecipe.title}">
             </div>
-
             <div class="center form-group">
                 <h3 class="display-7 center">Opis</h3>
-                <input type="text" name="description" class="form-control" th:value="${oldRecipe.description}" th:name="description"
+                <input type="text" name="description" class="form-control" th:value="${oldRecipe.description}"
+                       th:name="description"
                        th:id="description"
                        th:placeholder="${oldRecipe.description}">
             </div>
             <div class="center form-group">
                 <h3 class="display-7 center">Zdjęcie</h3>
-                <input type="text" class="form-control"  th:value="${oldRecipe.img}" th:name="img" th:id="img"
+                <input type="text" class="form-control" th:value="${oldRecipe.img}" th:name="img" th:id="img"
                        name="img"
                        th:placeholder="${oldRecipe.img}"><br>
             </div>
-            <div class="center form-group">
-                <h3 class="display-7 center">Kategoria</h3>
-                <input type="text" class="form-control"  th:value="${oldRecipe.category}" th:name="category" th:id="category"
-                       name="category"
-                       th:placeholder="${oldRecipe.category}"><br>
-            </div>
+            <input type="hidden" class="form-control" th:value="${oldRecipe.category}" th:name="category"
+                   th:id="category"
+                   name="category"><br>
+            <input type="hidden" class="form-control" th:value="${oldRecipe.user.id}" th:name="user" th:id="user"
+                   name="user"><br>
 
             <div class="center form-group">
                 <h3 class="display-7 center">Składniki</h3>
-
-
-                    <table class="table sizeTable" >
-                        <thead>
-                        <tr class="color">
-                            <th><h4  class="display-7 center">Nazwa</h4></th>
-                            <th><h4  class="display-7 center">Ilość</h4></th>
-                            <th><h4  class="display-7 center">Opcje</h4></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr  th:each="ingredient : ${byRecipe}">
-                            <td class="size"><img  th:text="${ingredient.name}"></td>
-                            <td class="size"><img  th:text="${ingredient.amount}"></td>
-                            <td><a th:href="|/skasuj?id=${ingredient.id}|" class="btn btn-secondary">Usuń</a></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        </tbody>
-                    </table>
-
-
-                </div>
-
-
+                <a methods="get" href="/dodawanie-skladniki" class="btn btn-secondary btn-lg btn-block">Dodaj
+                    składniki</a>
+                <table class="table sizeTable">
+                    <thead>
+                    <tr class="color">
+                        <th><h4 class="display-7 center">Nazwa</h4></th>
+                        <th><h4 class="display-7 center">Ilość</h4></th>
+                        <th><h4 class="display-7 center">Opcje</h4></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="ingredient : ${byRecipe}">
+                        <td class="size"><img th:text="${ingredient.name}"></td>
+                        <td class="size"><img th:text="${ingredient.amount}"></td>
+                        <td><a th:href="|/skasuj?id=${ingredient.id}|" class="btn btn-secondary">Usuń</a>
+                            <a th:href="|/edytuj-skladnik?id=${ingredient.id}|" class="btn btn-secondary">Edytuj</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
             <div class="center">
                 <button type="submit" class="btn btn-secondary btn-lg btn-block">Edytuj</button>
                 <br>
