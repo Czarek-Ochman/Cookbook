@@ -1,8 +1,8 @@
-#CookBook
+# CookBook
 
 A cook page where users can add / edit / delete and rate recipes
 
-#Technologies
+# Technologies
 * Spring Boot
 * Spring Security
 * Spring Data + JPA
@@ -10,7 +10,7 @@ A cook page where users can add / edit / delete and rate recipes
 * Bootstrap
 * Hibernate
 
-#Running
+# Running
 Go into the project dir and type mvn spring-boot:run, then open your browser and go to http://localhost:8080.
 
 
