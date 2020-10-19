@@ -277,7 +277,7 @@ insert into recipe (category, description, title, user_id, img, rating)
 values ('SUPPER',
         'Kolacja mistrzów!.',
         'Kanapka Cezara', 3,
-        'https://www.winiary.pl/image.ashx/zdjecie.jpg?fileID=227104&width=1400&height=1400&quality=84&bg=0&resize=0',
+        'https://lh3.googleusercontent.com/proxy/G8TFTfKHOfo5yjOyi6r173Xe2cWTjqJzrAJp1xUNLTRqKcqBQzkvJL3P72pnbX73fvtd1jd0PMu5XNOldGVqIch8ZB-8pBXwQKTDBMFflA-AfBIhScT2qZ-m',
         4);
 insert into ingredient (amount, name, recipe_id)
 values ('1 sztuka', 'pierś z kurczaka', 17);
@@ -292,7 +292,7 @@ insert into recipe (category, description, title, user_id, img, rating)
 values ('SUPPER',
         'Zostały Ci klopsy z obiadu? Działamy!.',
         'Bagietka z klopsami', 4,
-        'https://www.winiary.pl/image.ashx/zdjecie.jpg?fileID=232741&width=1400&height=1400&quality=84&bg=0&resize=0',
+        'https://i.ytimg.com/vi/p_q_eEBr50c/maxresdefault.jpg',
         10);
 insert into ingredient (amount, name, recipe_id)
 values ('4 sztuki', 'klopsy w sosie pomidorowym', 18);
@@ -307,7 +307,7 @@ insert into recipe (category, description, title, user_id, img, rating)
 values ('SUPPER',
         'Bardzo dobre i bardzo kaloryczne!.',
         'Kanapka na ciepło', 7,
-        'https://www.winiary.pl/image.ashx/zdjecie.jpg?fileID=222563&width=1400&height=1400&quality=84&bg=0&resize=0',
+        'https://i.wpimg.pl/O/644x429/d.wpimg.pl/1802692550--1861664696/kanapki-opiekane-gorace.jpg',
         8);
 insert into ingredient (amount, name, recipe_id)
 values ('3 łyżki', 'majonez', 19);
@@ -322,7 +322,7 @@ insert into recipe (category, description, title, user_id, img, rating)
 values ('SUPPER',
         'Zdrowo smacznie! Czyli tak jak ma być.',
         'Chrupiąca sałatka z brokułem', 7,
-        'https://www.winiary.pl/image.ashx/zdjecie.jpg?fileID=213791&width=1400&height=1400&quality=84&bg=0&resize=0',
+        'https://d1uz88p17r663j.cloudfront.net/resized/2020_02_19T16_00_59_image.ashx_zdjecie_944_531.jpg_fileID_178137',
         9);
 insert into ingredient (amount, name, recipe_id)
 values ('1', 'brokuł', 20);

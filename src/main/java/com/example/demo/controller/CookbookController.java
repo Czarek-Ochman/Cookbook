@@ -46,7 +46,7 @@ public class CookbookController {
     @PostMapping("/rejestracja")
     public String adding(UserBuilder userBuilder) {
         userService.saveUser(userBuilder.getFirstName(), userBuilder.getLastName(), userBuilder.getUsername(), userBuilder.getPassword());
-        return "home";
+        return "redirect:/";
     }
 
     @GetMapping("/kategorie")
