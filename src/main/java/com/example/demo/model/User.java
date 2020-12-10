@@ -26,7 +26,6 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Recipe> recipeList;
 
-
     public User(String firstName, String lastName, UserData userData) {
         this.firstName = firstName;
         this.lastName = lastName;
